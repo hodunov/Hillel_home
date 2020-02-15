@@ -37,3 +37,6 @@ print(my_dict) # also gets updated
 del [my_dict['Password']]
 print(my_dict.items())  # The items() method returns a view object.
 # The view object contains the key-value pairs of the dictionary, as tuples in a list.
+
+
+#test from HP
