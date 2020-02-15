@@ -3,7 +3,15 @@
 It is тут название фрукта juice. Ипользовать Ф-строки
 """
 
+
 # Write your code here
+#
+# def squeezer():
+#     my_fruit = input('Enter fruit  ')
+#     return f"It's my {my_fruit} juice"
+#
+#
+# print(squeezer())
 
 """
 2. Проапгрейдить функцию squeezer так, что бы она могла принимать несколько фруктов (смотреть про *args) и возвращала
@@ -14,6 +22,16 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 
 # Write your code here
 
+#
+# def squeezer_2(arg1, *argv):
+#     for arg1 in argv:
+#         print("First argument :", arg1)
+#     print(f"It's my {arg1} juice")
+#     return
+#
+#
+# print(squeezer_2())
+#
 
 """
 3. Написать функцию которая принимает на вход число и возвращает True если число четное и False если не четное
@@ -21,6 +39,16 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 
 # Write your code here
 
+
+def even_number(number):
+    if number/2 ==0:
+        print(True)
+    else:
+        print(False)
+    return
+
+
+print(even_number(12))
 
 """
 4. Написать функцию которая принимает на вход какой-то аргумент, приводит его к интеджеру и возвращает его. В случает
