@@ -4,14 +4,12 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 """
 
 
-# Write your code here
-#
-# def squeezer():
-#     my_fruit = input('Enter fruit  ')
-#     return f"It's my {my_fruit} juice"
-#
-#
-# print(squeezer())
+def squeezer():
+    my_fruit = input('Enter fruit  ')
+    return print(f"It's my {my_fruit} juice")
+
+
+squeezer()
 
 """
 2. Проапгрейдить функцию squeezer так, что бы она могла принимать несколько фруктов (смотреть про *args) и возвращала
@@ -20,18 +18,14 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 Тут можно почитать об args  - https://www.geeksforgeeks.org/args-kwargs-python/
 """
 
-# Write your code here
 
-#
-# def squeezer_2(arg1, *argv):
-#     for arg1 in argv:
-#         print("First argument :", arg1)
-#     print(f"It's my {arg1} juice")
-#     return
-#
-#
-# print(squeezer_2())
-#
+def squeezer_2():
+    my_fruit_1 = input('Enter fruit  ')
+    my_fruit_2 = input("Enter second fruit  ")
+    return print(f"It's my {my_fruit_1} and {my_fruit_2} juice")
+
+
+squeezer_2()
 
 """
 3. Написать функцию которая принимает на вход число и возвращает True если число четное и False если не четное
@@ -40,15 +34,15 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 # Write your code here
 
 
-def even_number(number):
-    if number/2 ==0:
-        print(True)
-    else:
-        print(False)
-    return
-
-
-print(even_number(12))
+# def even_number(number):
+#     if number/2 ==0:
+#         print(True)
+#     else:
+#         print(False)
+#     return
+#
+#
+# print(even_number(12))
 
 """
 4. Написать функцию которая принимает на вход какой-то аргумент, приводит его к интеджеру и возвращает его. В случает
@@ -56,8 +50,15 @@ print(even_number(12))
  (встроенные функции quit() или exit())
 """
 
-# Write your code here
 
+def output_int():
+    try:
+        return print(int(input('Enter any argument  ')))
+    except Exception as exception:
+        return exit(f"This argument can't be turned to int due to {exception}! Exit from program")
+
+
+output_int()
 """
 5. Переписать калькулятор на функцию для базовых операций (*, - , +, /) с ипользованием функции в задании выше
 """
