@@ -31,8 +31,8 @@ value = input('Input something  ')
 
 try:
     new_value = float(value) * (1 / 0)
-except ZeroDivisionError:
-    print("Zero Division Exception Raised")
+except (ZeroDivisionError, ValueError):
+    print("Zero Division or Value Error Exception Raised")
 else:
     print(new_value)
 
