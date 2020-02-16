@@ -1,12 +1,12 @@
-# Python program to illustrate
-# *args with first extra argument
-def myFun(arg1, *argv):
-	print ("First argument :", arg1)
-	for arg in argv:
-		print("Next argument through *argv :", arg)
-    print(f"It is {arg1} and {arg2} Juice")
+
+def squeezer(*my_fruit):
+    return print(f"It's my {my_fruit} juice")
 
 
-Arg1 = input("Enter arg here  ")
-Arg2 = input("Enter arg2 here  ")
-myFun(Arg1, Arg2)
+squeezer('a', 'b', 'c')
+
+def my_sum(my_integers):
+    return my_integers
+
+list_of_integers = [1, 2, 3]
+print(my_sum(list_of_integers))

@@ -4,12 +4,11 @@ It is тут название фрукта juice. Ипользовать Ф-ст
 """
 
 
-def squeezer():
-    my_fruit = input('Enter fruit  ')
+def squeezer(my_fruit):
     return print(f"It's my {my_fruit} juice")
 
 
-squeezer()
+squeezer(input('Enter fruit  '))
 
 """
 2. Проапгрейдить функцию squeezer так, что бы она могла принимать несколько фруктов (смотреть про *args) и возвращала
@@ -19,30 +18,29 @@ squeezer()
 """
 
 
-def squeezer_2():
-    my_fruit_1 = input('Enter fruit  ')
-    my_fruit_2 = input("Enter second fruit  ")
-    return print(f"It's my {my_fruit_1} and {my_fruit_2} juice")
+def squeezer_2(*my_fruit):
+    return print(f"It's my {my_fruit} juice")
 
 
-squeezer_2()
+squeezer_2(input('Enter first fruit  '), input('Enter second fruit  '))
+
+squeezer_2("banana", "orange", "apple")
+
 
 """
 3. Написать функцию которая принимает на вход число и возвращает True если число четное и False если не четное
 """
 
-# Write your code here
+
+def even_number(number):
+    if number % 2 == 0:
+        print(True)
+    else:
+        print(False)
+    return
 
 
-# def even_number(number):
-#     if number/2 ==0:
-#         print(True)
-#     else:
-#         print(False)
-#     return
-#
-#
-# print(even_number(12))
+even_number(int(input("Enter any number  ")))
 
 """
 4. Написать функцию которая принимает на вход какой-то аргумент, приводит его к интеджеру и возвращает его. В случает
@@ -53,14 +51,40 @@ squeezer_2()
 
 def output_int():
     try:
-        return print(int(input('Enter any argument  ')))
+        value = int(input("Type a number:"))
+        return value
     except Exception as exception:
-        return exit(f"This argument can't be turned to int due to {exception}! Exit from program")
+        exit(f"This argument can't be turned to int due to {exception}! Exit from program")
 
 
-output_int()
+print(type(output_int()))
 """
 5. Переписать калькулятор на функцию для базовых операций (*, - , +, /) с ипользованием функции в задании выше
 """
 
-# Write your code here
+sing = input('Input the sign  ')
+f_num = input('Input the first number   ')
+s_num = input('Input the second number   ')
+dev_sings = ('/', '//', '%')
+if f_num.isdigit() and s_num.isdigit():
+    f_num = int(f_num)
+    s_num = int(s_num)
+    if sing == '+':
+        print(f_num + s_num)
+    elif sing == '-':
+        print(f_num - s_num)
+    elif sing in dev_sings and int(s_num) == 0:
+        print('Error: Division by zero!')
+    elif sing == '//':
+        print(f_num // s_num)
+    elif sing == '%':
+        print(f_num % s_num)
+    elif sing == '/':
+        print(f_num / s_num)
+    elif sing == '*':
+        print(f_num * s_num)
+    else:
+        print('Oops! Not valid operation!')
+else:
+    print('Hey Hey Bad News! One of the numbers is not a digit...')
+
