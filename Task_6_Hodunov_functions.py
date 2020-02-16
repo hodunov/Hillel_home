@@ -74,19 +74,25 @@ sing = input('Input the sign  ')
 f_num = output_int(input('Input the first number   '))
 s_num = output_int(input('Input the second number   '))
 dev_sings = ('/', '//', '%')
-if sing == '+':
-    print(f_num + s_num)
-elif sing == '-':
-    print(f_num - s_num)
-elif sing in dev_sings and int(s_num) == 0:
-    print('Error: Division by zero!')
-elif sing == '//':
-    print(f_num // s_num)
-elif sing == '%':
-    print(f_num % s_num)
-elif sing == '/':
-    print(f_num / s_num)
-elif sing == '*':
-    print(f_num * s_num)
-else:
-    print('Oops! Not valid operation!')
+
+
+def calc(operation, number1, number2):
+    if operation == '+':
+        print(number1 + number2)
+    elif operation == '-':
+        print(number1 - number2)
+    elif operation in dev_sings and int(number2) == 0:
+        print('Error: Division by zero!')
+    elif operation == '//':
+        print(number1 // number2)
+    elif operation == '%':
+        print(number1 % number2)
+    elif operation == '/':
+        print(number1 / number2)
+    elif operation == '*':
+        print(number1 * number2)
+    else:
+        print('Oops! Not valid operation!')
+
+
+calc(sing, f_num, s_num)
