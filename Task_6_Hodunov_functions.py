@@ -10,6 +10,8 @@ def squeezer(my_fruit):
 
 squeezer(input('Enter fruit  '))
 
+print(input("Press ENTER for step 2"))
+
 """
 2. Проапгрейдить функцию squeezer так, что бы она могла принимать несколько фруктов (смотреть про *args) и возвращала
 строку It is тут название фрукта1, название фрукта2 juice
@@ -26,6 +28,7 @@ squeezer_2(input('Enter first fruit  '), input('Enter second fruit  '))
 
 squeezer_2("banana", "orange", "apple")
 
+print(input('Press Enter for STEP 3'))
 
 """
 3. Написать функцию которая принимает на вход число и возвращает True если число четное и False если не четное
@@ -42,6 +45,8 @@ def even_number(number):
 
 even_number(int(input("Enter any number  ")))
 
+print(input("Press ENTER for step 4"))
+
 """
 4. Написать функцию которая принимает на вход какой-то аргумент, приводит его к интеджеру и возвращает его. В случает
  ошибки выводит сообщение о том, что данный аргумент не может быть преведен к интеджеру и завершает программу 
@@ -49,42 +54,39 @@ even_number(int(input("Enter any number  ")))
 """
 
 
-def output_int():
+def output_int(arg):
     try:
-        value = int(input("Type a number:"))
-        return value
+        return int(arg)
     except Exception as exception:
         exit(f"This argument can't be turned to int due to {exception}! Exit from program")
 
 
-print(type(output_int()))
+print(output_int(input('number  ')))
+print(type(output_int(input('number  '))))
+
+print(input('Press Enter for STEP 5'))
+
 """
 5. Переписать калькулятор на функцию для базовых операций (*, - , +, /) с ипользованием функции в задании выше
 """
 
 sing = input('Input the sign  ')
-f_num = input('Input the first number   ')
-s_num = input('Input the second number   ')
+f_num = output_int(input('Input the first number   '))
+s_num = output_int(input('Input the second number   '))
 dev_sings = ('/', '//', '%')
-if f_num.isdigit() and s_num.isdigit():
-    f_num = int(f_num)
-    s_num = int(s_num)
-    if sing == '+':
-        print(f_num + s_num)
-    elif sing == '-':
-        print(f_num - s_num)
-    elif sing in dev_sings and int(s_num) == 0:
-        print('Error: Division by zero!')
-    elif sing == '//':
-        print(f_num // s_num)
-    elif sing == '%':
-        print(f_num % s_num)
-    elif sing == '/':
-        print(f_num / s_num)
-    elif sing == '*':
-        print(f_num * s_num)
-    else:
-        print('Oops! Not valid operation!')
+if sing == '+':
+    print(f_num + s_num)
+elif sing == '-':
+    print(f_num - s_num)
+elif sing in dev_sings and int(s_num) == 0:
+    print('Error: Division by zero!')
+elif sing == '//':
+    print(f_num // s_num)
+elif sing == '%':
+    print(f_num % s_num)
+elif sing == '/':
+    print(f_num / s_num)
+elif sing == '*':
+    print(f_num * s_num)
 else:
-    print('Hey Hey Bad News! One of the numbers is not a digit...')
-
+    print('Oops! Not valid operation!')
