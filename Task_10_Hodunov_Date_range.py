@@ -24,7 +24,7 @@ while True:
     except ValueError:
         print('Input the numbers!')
 
-print(f'Your date is {".".join( str(e) for e in user_list )}')  
+print(f'Your date is {".".join( str(e) for e in user_list )}')
 
 
 def date_range(date):
