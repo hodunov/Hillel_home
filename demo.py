@@ -1,7 +1,4 @@
-
-user_list=[]
-
-
+user_list = []
 
 while True:
     user_month = int(input('Enter your month  '))
@@ -10,6 +7,5 @@ while True:
         break
     else:
         print('LOL. Try again')
-
 
 user_date = int(input('Enter your year  '))
