@@ -24,7 +24,7 @@ while True:
     except ValueError:
         print('Input the numbers!')
 
-print(f'Your date is {".".join( str(e) for e in user_list )}')  # Как убрать квадратные скобки в отображении листа?
+print(f'Your date is {".".join( str(e) for e in user_list )}')  
 
 
 def date_range(date):
