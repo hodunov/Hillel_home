@@ -70,6 +70,7 @@ print(input('Press Enter for STEP 5'))
 5. Переписать калькулятор на функцию для базовых операций (*, - , +, /) с ипользованием функции в задании выше
 """
 
+
 sing = input('Input the sign  ')
 f_num = output_int(input('Input the first number   '))
 s_num = output_int(input('Input the second number   '))

@@ -44,7 +44,7 @@ while True:
 
 print(currency_exchange(amount, my_currency))
 print('')
-input('Press any key to show first version')
+input('Press ENTER to show first version')
 
 
 """
@@ -87,4 +87,4 @@ my_currency_2 = input('Enter one of the available currencies (USD, EUR, RUB, JPY
 
 print(currency_exchange_2(amount_2, my_currency_2))
 print('')
-input('Press any key to exit')
+input('Press ENTER to exit')
