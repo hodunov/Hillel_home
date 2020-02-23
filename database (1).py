@@ -21,41 +21,75 @@
     при add добавляем юзера, remove  - удаляем, show - показать всех, exit - завершить опрос
 """
 
+database = {}
+
+
+def add_member():
+    while True:
+        try:
+            user_nickname = str(input('Enter your nickname .\n'))
+            while True:
+                try:
+                    if user_nickname in database.values():
+                        raise ValueError
+                    break
+                except ValueError:
+                    print('This nickname is busy. Try another one')
+            if user_nickname.isdigit():
+                raise ValueError
+            break
+        except ValueError:
+            print('Please, input the str')
+    while True:
+        try:
+            user_name = str(input("Enter your name.\n"))
+            if user_name.isdigit():
+                raise ValueError
+            break
+        except ValueError:
+            print('Please, input the str')
+    while True:
+        try:
+            user_age = int(input("Enter your age.\n"))
+            break
+        except ValueError:
+            print("Oh,No! Please enter a number")
+    user_email = str(input("Please enter your email.\n"))
+    a = 0  # Email validation start
+    y = len(user_email)
+    dot, at = user_email.find("."), user_email.find("@")
+    for i in range(0, at):
+        if ('a' <= user_email[i] <= 'z') or ('A' <= user_email[i] <= 'Z'):
+            a = a + 1
+    if a > 0 and at > 0 and (dot - at) > 0 and (dot + 1) < y:
+        print("Valid Email")
+        new_member = {user_nickname: {'Name': user_name, 'Age': user_age, 'Email': user_email}}
+        return database.update(new_member), print('Ok, you are added in database', database)
+    else:
+        print("Sorry. Invalid Email")
+
+
+def delete_member():
+    delete_user = str(input("Enter your nickname which need to delete .\n"))
+    for delete_user in database.items():
+        database.pop(delete_user)
+    print('New database: \n', database)
+
 
 def main():
     while True:
         try:
             command = int(input('Which command need to do. 1- add, 2 - remove, 3- Show, 4- exit \n'))
             if 0 < command < 5:
-                database = {
-                    'user_id': {
-                        'name': 'Имя',
-                        'age': 'возраст',
-                        'email': 'емейл',
-                    }
-                }
                 if command == 1:
-                    username = str(input("Enter your username.\n"))
-                    while True:
-                        try:
-                            user_age = int(input("Enter your age.\n"))
-                            break
-                        except ValueError:
-                            print("Oh,No! Please enter a number")
-                    user_email = str(input("Please enter your email.\n"))
-                    database.update(name=username)
-                    database.update(age=user_age)
-                    database.update(email=user_email)
-                    print('Ok, you are added in database', database)
-                if command == 2:
-                    print('Not yet')
-                if command == 3:
+                    add_member()
+                elif command == 2:
+                    delete_member()
+                elif command == 3:
                     print('All users: \n', database)
-                if command == 4:
-                    print('God')
-            else:
-                print('Thanks for all!')
-                break
+                elif command == 4:
+                    print("Exit. Have a nice day")
+                    break
         except ValueError:
             print('Input the numbers!')
     pass
