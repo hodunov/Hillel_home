@@ -28,15 +28,8 @@ def add_member():
     while True:
         try:
             user_nickname = str(input('Enter your nickname .\n'))
-            while True:
-                try:
-                    if user_nickname in database.values():
-                        raise ValueError
-                    break
-                except ValueError:
-                    print('This nickname is busy. Try another one')
-            if user_nickname.isdigit():
-                raise ValueError
+            if user_nickname.isdigit():  # Не получилось добавить условие ЕСЛИ СУЩЕСТВУЕТ В СЛОВАРЕ.
+                raise ValueError  # пробовал через for user_nickname in database.items()
             break
         except ValueError:
             print('Please, input the str')
@@ -69,13 +62,6 @@ def add_member():
         print("Sorry. Invalid Email")
 
 
-def delete_member():
-    delete_user = str(input("Enter your nickname which need to delete .\n"))
-    for delete_user in database.items():
-        database.pop(delete_user)
-    print('New database: \n', database)
-
-
 def main():
     while True:
         try:
@@ -84,8 +70,13 @@ def main():
                 if command == 1:
                     add_member()
                 elif command == 2:
-                    delete_member()
+                    delete_user = str(input("Enter your nickname which need to delete .\n"))
+                    database.pop(delete_user, None)
+                    print('You are deleted =(')
+                    print('All users: \n', database)
                 elif command == 3:
+                    delete_user = str(input("Enter your nickname which need to delete .\n"))
+                    database.pop(delete_user, None)
                     print('All users: \n', database)
                 elif command == 4:
                     print("Exit. Have a nice day")
