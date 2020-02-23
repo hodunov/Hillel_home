@@ -24,25 +24,40 @@
 
 def main():
     while True:
-        while True:
-            try:
-                command = int(input('Which command need to do. 1- add, 2 - remove, 3- Show, 4- exit '))
-                if 0 < command < 5:
-                    break
-                else:
-                    print('Try again')
-            except ValueError:
-                print('Input the numbers!')
-        if command == 1:
-
-        if command == 2:
-
-        if command == 3:
-
-        if command == 4:
-
-        else:
-            print("Try again")
+        try:
+            command = int(input('Which command need to do. 1- add, 2 - remove, 3- Show, 4- exit \n'))
+            if 0 < command < 5:
+                database = {
+                    'user_id': {
+                        'name': 'Имя',
+                        'age': 'возраст',
+                        'email': 'емейл',
+                    }
+                }
+                if command == 1:
+                    username = str(input("Enter your username.\n"))
+                    while True:
+                        try:
+                            user_age = int(input("Enter your age.\n"))
+                            break
+                        except ValueError:
+                            print("Oh,No! Please enter a number")
+                    user_email = str(input("Please enter your email.\n"))
+                    database.update(name=username)
+                    database.update(age=user_age)
+                    database.update(email=user_email)
+                    print('Ok, you are added in database', database)
+                if command == 2:
+                    print('Not yet')
+                if command == 3:
+                    print('All users: \n', database)
+                if command == 4:
+                    print('God')
+            else:
+                print('Thanks for all!')
+                break
+        except ValueError:
+            print('Input the numbers!')
     pass
 
 
