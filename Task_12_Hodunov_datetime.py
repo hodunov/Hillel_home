@@ -9,7 +9,7 @@ date_str = "Feb 12 2019 2:41PM"
 
 
 def parser(my_datetime):
-    return datetime.strptime(my_datetime, '%b %d %Y %I:%M%p').strftime("%Y-%m-%d %H:%M:%S")
+    return str(datetime.strptime(my_datetime, '%b %d %Y %I:%M%p').strftime("%Y-%m-%d %H:%M:%S"))
 
 
 print(parser(date_str))
