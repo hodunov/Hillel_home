@@ -1,11 +1,7 @@
-import json
+Python has several built-in modules and functions for handling files.
+These functions are spread out over several modules such as os, os.path, shutil, and pathlib,
+ to name a few. This article gathers in one place many of the functions you need to know in order
+ to perform the most common operations on files in Python.
 
-with open('questions.json', 'r+') as f:
-    data = json.load(f)
-    data['answer'] = str(input("Enter the first name  "))  # <--- add `First_name` value.
-    data['answer'] = str(input("Enter the last name  "))   # <--- add `Last_name` value.
-    data['answer'] = input("Enter the email  ")   # <--- add `Email` value.
-    data['answer'] = int(input("Enter the number  "))  # <--- add `Phone` value.
-    f.seek(0)  # <--- should reset file position to the beginning.
-    json.dump(data, f, indent=4)
-    f.truncate()  # remove remaining part
+Append line 1
+Append line 2
