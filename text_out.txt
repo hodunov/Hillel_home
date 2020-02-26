@@ -1,5 +1,7 @@
-This
-is
-a
-test
-file
+Python has several built-in modules and functions for handling files.
+These functions are spread out over several modules such as os, os.path, shutil, and pathlib,
+ to name a few. This article gathers in one place many of the functions you need to know in order
+ to perform the most common operations on files in Python.
+
+Append line 1
+Append line 2
