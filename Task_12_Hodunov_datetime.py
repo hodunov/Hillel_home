@@ -1,7 +1,7 @@
 """
 Create function:
 Input: Feb 12 2019 2:41PM # Str
-Output: 2019-02-12 14:41:00 #datetime
+Output: 2019-02-12 14:41:00 #Str
 """
 from datetime import datetime
 
