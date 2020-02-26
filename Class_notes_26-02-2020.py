@@ -14,10 +14,18 @@
 
 # Generator
 
-def gen(val):
-    for i in val:
-        yield i
+# def gen(val):
+#     for i in val:
+#         yield i
 
 
+def monitor(func_name, *args, **kwargs):
+    with open('monitor.txt', 'w') as file:
+        file.write(f"Result is {func_name(*args, **kwargs)}")
 
 
+def my_fun(a, b):
+    return a + b
+
+
+monitor(my_fun, 1, 2)
