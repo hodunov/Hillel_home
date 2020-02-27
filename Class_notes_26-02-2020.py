@@ -17,15 +17,44 @@
 # def gen(val):
 #     for i in val:
 #         yield i
+#
+#
+# def monitor(func_name, *args, **kwargs):
+#     with open('monitor.txt', 'w') as file:  # file = open('monitor.txt', 'w')
+#         file.write(f"Result is {func_name(*args, **kwargs)}")
+#
+#
+# def my_fun(a, b):
+#     return a + b
+#
+#
+# monitor(my_fun, 1, 2)
+
+# Move data
+
+import requests, json
 
 
-def monitor(func_name, *args, **kwargs):
-    with open('monitor.txt', 'w') as file:
-        file.write(f"Result is {func_name(*args, **kwargs)}")
+def get_data(url):
+    return requests.get(url)
 
 
-def my_fun(a, b):
-    return a + b
+def parse_data():
+    response = get_data('http://www.mocky.io/v2/5e56ab1e300000355b28e97c')
+    data = response.json()
+    print(data)
+    for item in data:
+        print(item)
 
 
-monitor(my_fun, 1, 2)
+# parse_data()
+
+
+def parse_data_2():
+    response = get_data('http://www.mocky.io/v2/5e56ab1e300000355b28e97c')
+    data = response.json()
+    with open('animals.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
+
+parse_data_2()
