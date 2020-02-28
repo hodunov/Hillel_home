@@ -2,23 +2,23 @@
   "questions": [
     {
       "q": "What is your name?",
-      "answer": ""
+      "answer": "Artem"
     },
     {
       "q": "How old are you?",
-      "answer": ""
+      "answer": "25"
     },
     {
       "q": "Do you like python?",
-      "answer": ""
+      "answer": "Yeah"
     },
     {
       "q": "What is the most difficult topic for you?",
-      "answer": ""
+      "answer": "Json"
     },
     {
       "q": "Please write suggestions and wishes",
-      "answer": ""
+      "answer": "Make less mistakes =)"
     }
   ]
 }
