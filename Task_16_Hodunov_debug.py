@@ -5,20 +5,20 @@
 
 
 # 1
-
-
-def monitor(func_name, *args, **kwargs):
-    with open('monitor.txt', 'a+') as file:
-        res = func_name(*args, **kwargs)
-        file.write(f'{res}')
-        return res
-
-
-def my_fun(arg1, arg2):
-    return arg1 + arg2
-
-
-print(monitor(my_fun, 1, 2))
+#
+#
+# def monitor(func_name, *args, **kwargs):
+#     with open('monitor.txt', 'a+') as file:
+#         res = func_name(*args, **kwargs)
+#         file.write(f'{res}')
+#         return res
+#
+#
+# def my_fun(arg1, arg2):
+#     return arg1 + arg2
+#
+#
+# print(monitor(my_fun, 1, 2))
 
 # 2 Морсткой бой
 
