@@ -8,9 +8,8 @@
 
 
 def open_txt(txt):
-    with open(txt) as f:
-        with open(txt, 'r') as f3:
-            print(f3.read())
+    with open(txt, 'r') as f3:
+        print(f3.read())
 
 
 def write_out_txt(txt_from, txt_to):
