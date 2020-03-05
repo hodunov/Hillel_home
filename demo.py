@@ -1,19 +1,28 @@
-data = [
-    {'name': 'Bill', 'lastname': 'Boll'},
-    {'name': 'Bob', 'lastname': 'Zip'},
-    {'lastname': 'Fuf'},
-    {'lastname': 'Albertus'},
-    {'name': 'Dimon', 'lastname': 'Nomid'}
-]
+class Hero:
+    def __init__(self, name):
+        self.name = name
 
 
-def get_name(dictionary):
-    """ Return the value of a key in a dictionary. """
-    if 'name' in dictionary.values():
-        return dictionary['name']
-    else:
-        return dictionary['lastname']
+class Colobok(Hero):
+    pass
 
 
-data.sort(key=get_name)
-print(data)
+class Babka(Hero):
+    def bake_colobok(self):
+        return Colobok('Kolobok')
+
+
+class Tale:
+    def __init__(self, babka, ded):
+        self.babka = babka
+        self.ded = ded
+        self.colobok = None
+
+    def babkin_dom(self):
+        self.colobok = self.babka.bake_colobok()
+
+    def start(self):
+        self.babkin_dom()
+
+
+Tale.start('hello')
