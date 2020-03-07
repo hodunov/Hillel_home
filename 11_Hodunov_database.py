@@ -24,11 +24,8 @@
 database = {}
 
 
-
-
-
-
-def add_member():
+def user_nickname_func():
+    global user_nickname
     while True:
         try:
             user_nickname = str(input('Enter your nickname .\n'))
@@ -38,6 +35,9 @@ def add_member():
         except ValueError:
             print('Please, input the str')
 
+
+def user_name_func():
+    global user_name
     while True:
         try:
             user_name = str(input("Enter your name.\n"))
@@ -46,12 +46,20 @@ def add_member():
             break
         except ValueError:
             print('Please, input the str')
+
+
+def user_age_func():
+    global user_age
     while True:
         try:
             user_age = int(input("Enter your age.\n"))
             break
         except ValueError:
             print("Oh,No! Please enter a number")
+
+
+def user_email_func():
+    global database
     user_email = str(input("Please enter your email.\n"))
     a = 0  # Email validation start
     y = len(user_email)
@@ -67,6 +75,20 @@ def add_member():
         print("Sorry. Invalid Email")
 
 
+def add_member():
+    user_nickname_func()
+    user_name_func()
+    user_age_func()
+    user_email_func()
+
+
+def del_user():
+    delete_user = str(input("Enter your nickname which need to delete .\n"))
+    database.pop(delete_user, None)
+    print('You are deleted =(')
+    print('All users: \n', database)
+
+
 def main():
     while True:
         try:
@@ -75,13 +97,8 @@ def main():
                 if command == 1:
                     add_member()
                 elif command == 2:
-                    delete_user = str(input("Enter your nickname which need to delete .\n"))
-                    database.pop(delete_user, None)
-                    print('You are deleted =(')
-                    print('All users: \n', database)
+                    del_user()
                 elif command == 3:
-                    delete_user = str(input("Enter your nickname which need to delete .\n"))
-                    database.pop(delete_user, None)
                     print('All users: \n', database)
                 elif command == 4:
                     print("Exit. Have a nice day")
