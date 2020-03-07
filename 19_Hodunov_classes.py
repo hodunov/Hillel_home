@@ -49,42 +49,42 @@ class Fox(Hero):
 
 class Tale:
     def __init__(self, Grandpa, Grandma, Bunny, Wolf, Fox):
-        self.Grandpa = Grandpa
-        self.Grandma = Grandma
-        self.Kolobok = None
-        self.Bunny = Bunny
-        self.Wolf = Wolf
-        self.Fox = Fox
+        self.grandpa = Grandpa
+        self.grandma = Grandma
+        self.kolobok = None
+        self.bunny = Bunny
+        self.wolf = Wolf
+        self.fox = Fox
 
     def grandmas_house(self):
         print("|||Grandma's house|||\nGrandpa says:")
-        self.Grandpa.beg_grendma()
-        self.Kolobok = self.Grandma.bake_kolobok()
-        self.Kolobok.rest()
+        self.grandpa.beg_grendma()
+        self.kolobok = self.grandma.bake_kolobok()
+        self.kolobok.rest()
 
     def wood(self):
         print("|||Wood|||")
-        self.Kolobok.roll()
+        self.kolobok.roll()
         print("Bunny says:")
-        self.Bunny.talk()
+        self.bunny.talk()
         print("Kolobok says:")
-        self.Kolobok.sing_song()
-        self.Kolobok.roll()
+        self.kolobok.sing_song()
+        self.kolobok.roll()
         print("Wolf says:")
-        self.Wolf.talk()
+        self.wolf.talk()
         print("Kolobok says:")
-        self.Kolobok.sing_song()
-        self.Kolobok.roll()
+        self.kolobok.sing_song()
+        self.kolobok.roll()
         print("Fox says:")
-        self.Fox.talk()
+        self.fox.talk()
         print("Kolobok says:")
-        self.Kolobok.sing_song()
+        self.kolobok.sing_song()
         print("Fox says:")
-        self.Fox.praise()
-        self.Fox.request()
+        self.fox.praise()
+        self.fox.request()
         print("Kolobok says:")
-        self.Kolobok.sing_song()
-        self.Kolobok.die()
+        self.kolobok.sing_song()
+        self.kolobok.die()
 
     def start(self):
         self.grandmas_house()

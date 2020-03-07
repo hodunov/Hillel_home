@@ -24,6 +24,10 @@
 database = {}
 
 
+
+
+
+
 def add_member():
     while True:
         try:
@@ -33,6 +37,7 @@ def add_member():
             break
         except ValueError:
             print('Please, input the str')
+
     while True:
         try:
             user_name = str(input("Enter your name.\n"))
