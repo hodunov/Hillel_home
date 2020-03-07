@@ -25,4 +25,4 @@ class Tale:
         self.babkin_dom()
 
 
-Tale.start('hello')
+Tale.start(self)

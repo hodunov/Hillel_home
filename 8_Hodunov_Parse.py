@@ -1,4 +1,7 @@
 def parse(my_str):
+    """
+    This function make parse
+    """
     my_list = []
     data = 0
     for i in my_str:
@@ -13,18 +16,17 @@ def parse(my_str):
     return my_list
 
 
-exp = 'iiisdoso'
-print(f"That's what came out of it, Comrad {parse(exp)} ")
-print("Now you can try to type the line yourself. ")
+MY_EXP = 'iiisdoso'
+print(f"That's what came out of it, Comrad {parse(MY_EXP)}")
+print("Now you can try to type the line yourself.")
 
 while True:
     try:
-        user_data = str(input('Enter your str  '))
-        if user_data.isdigit():
+        USER_DATA = str(input('Enter your str \n'))
+        if USER_DATA.isdigit():
             raise ValueError
         break
     except ValueError:
         print('Please, input the str')
 
-print(f"Good job. That's what came out of it, Comrad {parse(user_data)} ")
-exit("That's all")
+print(f"Good job. That's what came out of it, Comrad {parse(USER_DATA)}")

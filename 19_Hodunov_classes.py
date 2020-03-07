@@ -1,6 +1,3 @@
-# ___________KOLOBOK_______________
-
-
 class Hero:
     def __init__(self, name):
         self.name = name
@@ -83,7 +80,6 @@ class Tale:
     def start(self):
         self.grandmas_house()
         self.wood()
-        return self.grandmas_house(), self.wood()
 
 
-my_tail = Tale('1', '2', '3', '4', '5', '6').start()
+Tale.start()
