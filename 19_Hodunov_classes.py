@@ -44,12 +44,10 @@ class Kolobok(Hero):
 
 
 class Bunny(Hero):
-    """Bunny info"""
     pass
 
 
 class Wolf(Hero):
-    """Wolf info"""
     pass
 
 
@@ -66,14 +64,14 @@ class Fox(Hero):
 
 
 class Tale:
-    def __init__(self, Grandpa, Grandma, Bunny, Wolf, Fox):
+    def __init__(self, Grandpa_tale, Grandma_tale, Bunny_tale, Wolf_tale, Fox_tale):
         """Names of all heroes"""
-        self.grandpa = Grandpa
-        self.grandma = Grandma
+        self.grandpa = Grandpa_tale
+        self.grandma = Grandma_tale
         self.kolobok = None
-        self.bunny = Bunny
-        self.wolf = Wolf
-        self.fox = Fox
+        self.bunny = Bunny_tale
+        self.wolf = Wolf_tale
+        self.fox = Fox_tale
 
     def grandmas_house(self):
         """Story begin"""
@@ -113,7 +111,7 @@ class Tale:
         self.wood()
 
 
-GRANDPA, GRANDMA = Grandpa('Ded'), Grandma('Babka')
-BUNNY, WOLF, FOX = Bunny("Bunny"), Wolf('Wolk'), Fox('Lisa')
+GRANDPA, GRANDMA = Grandpa('Ded'), Grandma('Grandma')
+BUNNY, WOLF, FOX = Bunny("Bunny"), Wolf('Wolk'), Fox('Fox')
 
 Tale(GRANDPA, GRANDMA, BUNNY, WOLF, FOX).start()
