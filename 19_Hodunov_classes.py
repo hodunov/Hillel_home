@@ -64,14 +64,14 @@ class Fox(Hero):
 
 
 class Tale:
-    def __init__(self, Grandpa_tale, Grandma_tale, Bunny_tale, Wolf_tale, Fox_tale):
+    def __init__(self, grandpa_tale, grandma_tale, bunny_tale, wolf_tale, fox_tale):
         """Names of all heroes"""
-        self.grandpa = Grandpa_tale
-        self.grandma = Grandma_tale
+        self.grandpa = grandpa_tale
+        self.grandma = grandma_tale
         self.kolobok = None
-        self.bunny = Bunny_tale
-        self.wolf = Wolf_tale
-        self.fox = Fox_tale
+        self.bunny = bunny_tale
+        self.wolf = wolf_tale
+        self.fox = fox_tale
 
     def grandmas_house(self):
         """Story begin"""
