@@ -5,7 +5,7 @@
 from math import sqrt
 
 
-class Shape(object):
+class Shape:
     """
     Generic Shape object
     """
