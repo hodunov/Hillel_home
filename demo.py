@@ -1,303 +1,119 @@
-import sys
-import os
-import random
-import pickle
+import json
+import re
+from jsonbox import JsonBox
 
-weapons = {"Great Sword": 40}
+# generate unique box id
+MY_BOX_ID = JsonBox.get_new_box_id()
+
+# create instance
+jb = JsonBox()
+
+data = [{"name": "first", "age": 25}]
+
+# write data
+result = jb.write(data, MY_BOX_ID)
+
+# get record id of written data
+record_ids = jb.get_record_id(result)
+object_1 = {"ARTEM": "HODUNOV", "age": 25}
+object_2 = {"dddddd": "HODUNOV", "age": 25}
+
+jb.update(object_1, MY_BOX_ID, record_id=['5e74d4cb622c0800173390a5'])
+jb.update(object_2, MY_BOX_ID, record_id=['5e74d4cb622c0800173390a5'])
 
 
-class Player:
-    def __init__(self, name):
+
+class Item:
+    """
+    Class for contain some information
+    """
+    def __init__(self, name, done):
         self.name = name
-        self.maxhealth = 100
-        self.health = self.maxhealth
-        self.base_attack = 10
-        self.gold = 40
-        self.pots = 0
-        self.weap = ["Rusty Sword"]
-        self.curweap = ["Rusty Sword"]
+        self.done = done
 
-    @property
-    def attack(self):
-        attack = self.base_attack
-        if self.curweap == "Rusty Sword":
-            attack += 5
-
-        if self.curweap == "Great Sword":
-            attack += 15
-
-        return attack
+    def get_display(self):
+        return f'{self.name}: {self.done}'
 
 
-class Goblin:
-    def __init__(self, name):
-        self.name = name
-        self.maxhealth = 50
-        self.health = self.maxhealth
-        self.attack = 5
-        self.goldgain = 10
+class TodoMain:
+    """
+    Main logic
+    """
+    def __init__(self, owner_full_name, file_path):
+        self.owner_full_name = owner_full_name
+        self.file_path = file_path
+        try:
+            self.tasks = self.get_existing_tasks()
+        except (FileExistsError, FileNotFoundError):
+            self.tasks = {}
 
+    def get_existing_tasks(self):
+        """
+        Get existing task from json file
+        :return: json file
+        """
+        return jb.read(MY_BOX_ID)
 
-GoblinIG = Goblin("Goblin")
+    def write_to_file(self):
+        """
+        Write some inf to json
+        :return: json
+        """
+        with open(self.file_path, 'a+') as file:
+            jb.write(self.tasks, file)
 
-
-class Zombie:
-    def __init__(self, name):
-        self.name = name
-        self.maxhealth = 70
-        self.health = self.maxhealth
-        self.attack = 7
-        self.goldgain = 15
-
-
-ZombieIG = Zombie("Zombie")
-
-
-def main():
-    os.system('cls')
-    print("Welcome to my game!\n")
-    print("1.) Start")
-    print("2.) Load")
-    print("3.) Exit")
-    option = input("-> ")
-    if option == "1":
-        start()
-    elif option == "2":
-        if os.path.exists("savefile") == True:
-            os.system('cls')
-            with open('savefile', 'rb') as f:
-                global PlayerIG
-                PlayerIG = pickle.load(f)
-            print("Loaded Save State...")
-            option = input(' ')
-            start1()
+    def add_Todo(self, task_name, done):
+        """
+        Add new task
+        :param task_name:
+        :param done:
+        :return:
+        """
+        for every_word in task_name.split(" "):
+            if re.match(r'\w', every_word, flags=re.ASCII) is None:
+                raise BaseException('Not match reg exp(((')
         else:
-            print("You have no save file for this game.")
-            option = input(' ')
-            main()
+            task = Item(task_name, done)
+            jb.update({task.name: task.done}, MY_BOX_ID, record_ids[0])
+        return
 
-    elif option == "3":
-        sys.exit()
-    else:
-        main()
+    def remove_Todo(item):
+        pass
 
+    def show_Todo(self):
+        print(jb.read(MY_BOX_ID))
 
-def start():
-    os.system('cls')
-    print("Hello, what is your name?")
-    option = input("--> ")
-    global PlayerIG
-    PlayerIG = Player(option)
-    start1()
+    def make_task_done(self, task_name):
+        self.tasks[task_name] = True
 
+    def make_task_undone(self, task_name):
+        self.tasks[task_name] = False
 
-def start1():
-    os.system('cls')
-    print("Name: %s" % PlayerIG.name)
-    print("Attack: %i" % PlayerIG.attack)
-    print("Gold: %d" % PlayerIG.gold)
-    print("Current Weapons: %s" % PlayerIG.curweap)
-    print("Potions: %d" % PlayerIG.pots)
-    print("Health: %i/%i\n" % (PlayerIG.health, PlayerIG.maxhealth))
-    print("1.) Fight")
-    print("2.) Store")
-    print("3.) Save")
-    print("4.) Exit")
-    print("5.) Inventory")
-    option = input("--> ")
-    if option == "1":
-        prefight()
-    elif option == "2":
-        store()
-    elif option == "3":
-        os.system('cls')
-        with open('savefile', 'wb') as f:
-            pickle.dump(PlayerIG, f)
-            print("\nGame has been saved!\n")
-        option = input(' ')
-        start1()
-    elif option == "4":
-        sys.exit()
-    elif option == "5":
-        inventory()
-    else:
-        start1()
+    def show_undone_tasks(self):
+        undone_tasks = []
+        for k, v in self.tasks.items():
+            if not v:
+                undone_tasks.append(Item(k, v).get_display())
+        print(' | '.join(undone_tasks))
+
+    def start_list(self):
+        while True:
+            opt = input('Input option add/show_all/show_undone/make_done/make_undone/exit')
+            if opt == 'exit':
+                self.write_to_file()
+                break
+            elif opt == 'add':
+                self.add_Todo(input('Task_name '), bool(input('write smth if done ')))
+            elif opt == 'show_all':
+                self.show_Todo()
+            elif opt == 'show_undone':
+                self.show_undone_tasks()
+            elif opt == 'make_done ':
+                self.make_task_done(input('Task_name'))
+            elif opt == 'make_undone ':
+                self.make_task_undone(input('make_undone '))
 
 
-def inventory():
-    os.system('cls')
-    print("what do you want to do?")
-    print("1.) Equip Weapon")
-    print("b.) go back")
-    option = input(">>> ")
-    if option == "1":
-        equip()
-    elif option == 'b':
-        start1()
+my_task_list = TodoMain('Vitalii Fisenko', 'tasks.json')
 
-
-def equip():
-    os.system('cls')
-    print("What do you want to equip?")
-    for weapon in PlayerIG.weap:
-        print(weapon)
-    print("b to go back")
-    option = input(">>> ")
-    if option == PlayerIG.curweap:
-        print("You already have that weapon equipped")
-        option = input(" ")
-        equip()
-    elif option == "b":
-        inventory()
-    elif option in PlayerIG.weap:
-        PlayerIG.curweap = option
-        print("You have equipped %s." % option)
-        option = input(" ")
-        equip()
-    else:
-        print("You don't have %s in your inventory" % option)
-
-
-def prefight():
-    global enemy
-    enemynum = random.randint(1, 2)
-    if enemynum == 1:
-        enemy = GoblinIG
-    else:
-        enemy = ZombieIG
-    fight()
-
-
-def fight():
-    os.system('cls')
-    print("%s     vs      %s" % (PlayerIG.name, enemy.name))
-    print("%s's Health: %d/%d    %s's Health: %i/%i" % (
-    PlayerIG.name, PlayerIG.health, PlayerIG.maxhealth, enemy.name, enemy.health, enemy.maxhealth))
-    print("Potions %i\n" % PlayerIG.pots)
-    print("1.) Attack")
-    print("2.) Drink Potion")
-    print("3.) Run")
-    option = input(' ')
-    if option == "1":
-        attack()
-    elif option == "2":
-        drinkpot()
-    elif option == "3":
-        run()
-    else:
-        fight()
-
-
-def attack():
-    os.system('cls')
-    PAttack = random.randint(PlayerIG.attack / 2, PlayerIG.attack)
-    EAttack = random.randint(enemy.attack / 2, enemy.attack)
-    if PAttack == PlayerIG.attack / 2:
-        print("You miss!")
-    else:
-        enemy.health -= PAttack
-        print("You deal %i damage!" % PAttack)
-    option = input(' ')
-    if enemy.health <= 0:
-        win()
-    os.system('cls')
-    if EAttack == enemy.attack / 2:
-        print("The enemy missed!")
-    else:
-        PlayerIG.health -= EAttack
-        print("The enemy deals %i damage!" % EAttack)
-    option = input(' ')
-    if PlayerIG.health <= 0:
-        dead()
-    else:
-        fight()
-
-
-def drinkpot():
-    os.system('cls')
-    if PlayerIG.pots == 0:
-        print("You don't have any potions!")
-    else:
-        PlayerIG.health += 50
-        if PlayerIG.health > PlayerIG.maxhealth:
-            PlayerIG.health = PlayerIG.maxhealth
-        print("You drank a potion!")
-    option = input(' ')
-    fight()
-
-
-def run():
-    os.system('cls')
-    runnum = random.randint(1, 3)
-    if runnum == 1:
-        print("You have successfully ran away!")
-        option = input(' ')
-        start1()
-    else:
-        print("You failed to get away!")
-        option = input(' ')
-        os.system('cls')
-        EAttack = random.randint(enemy.attack / 2, enemy.attack)
-        if EAttack == enemy.attack / 2:
-            print("The enemy missed!")
-        else:
-            PlayerIG.health -= EAttack
-            print("The enemy deals %i damage!" % EAttack)
-        option = input(' ')
-        if PlayerIG.health <= 0:
-            dead()
-        else:
-            fight()
-
-
-def win():
-    os.system('cls')
-    enemy.health = enemy.maxhealth
-    PlayerIG.gold += enemy.goldgain
-    print("You have defeated the %s" % enemy.name)
-    print("You found %i gold!" % enemy.goldgain)
-    option = input(' ')
-    start1()
-
-
-def dead():
-    os.system('cls')
-    print("You have died")
-    option = input(' ')
-
-
-def store():
-    os.system('cls')
-    print("Welcome to the shop!")
-    print("\nWhat would you like to buy?\n")
-    print("1.) Great Sword")
-    print("back")
-    print(" ")
-    option = input(' ')
-
-    if option in weapons:
-        if PlayerIG.gold >= weapons[option]:
-            os.system('cls')
-            PlayerIG.gold -= weapons[option]
-            PlayerIG.weap.append(option)
-            print("You have bought %s" % option)
-            option = input(' ')
-            store()
-
-        else:
-            os.system('cls')
-            print("You don't have enough gold")
-            option = input(' ')
-            store()
-
-    elif option == "back":
-        start1()
-
-    else:
-        os.system('cls')
-        print("That item does not exist")
-        option = input(' ')
-        store()
-
-
-main()
+my_task_list.start_list()
