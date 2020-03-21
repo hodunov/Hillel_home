@@ -1,5 +1,6 @@
 import re
 import json
+from termcolor import cprint
 
 
 class Item:
@@ -12,17 +13,9 @@ class Item:
 
 
 class TodoList:
-    eng_regexp = r'^[A-Za-z]'
-    ru_regexp = r'^[А-Яа-я]'
-    lang_map = {
-        'ENG': eng_regexp,
-        'RU': ru_regexp
-    }
-
-    def __init__(self, owner_full_name, file_path, lang='ENG'):
+    def __init__(self, owner_full_name, file_path):
         self.owner_full_name = owner_full_name
         self.file_path = file_path
-        self.act_regex = self.lang_map[lang]
         try:
             self.tasks = self.get_existing_tasks()
         except (FileExistsError, FileNotFoundError):
@@ -37,18 +30,19 @@ class TodoList:
             json.dump(self.tasks, file)
 
     def add_task(self, task_name, done):
-        if re.match(self.act_regex, task_name):
-            task = Item(task_name, done)
-            self.tasks.update({task.name: task.done})
-        else:
-            raise BaseException('Not match reg exp(((')
+        task_name = task_name.lstrip(' ').rstrip(' ')  # убираем пробелы в начале и конце (Если есть)
+        for every_word in task_name.split(" "):  # Проверка каждого слова на ASCII
+            if re.match(r'\w', every_word, flags=re.ASCII) is None:
+                cprint("Input available in English only", color='red')
+            else:
+                task = Item(task_name, done)
+                self.tasks.update({task.name: task.done})
 
     def show_tasks(self):
         tasks = []
         for k, v in self.tasks.items():
             tasks.append(Item(k, v).get_display())
-        print(tasks)
-        print(' | '.join(tasks))
+        cprint(' | '.join(tasks), color='cyan')
 
     def make_task_done(self, task_name):
         self.tasks[task_name] = True
@@ -61,24 +55,24 @@ class TodoList:
         for k, v in self.tasks.items():
             if not v:
                 undone_tasks.append(Item(k, v).get_display())
-        print(' | '.join(undone_tasks))
+        cprint(' | '.join(undone_tasks), color='magenta')
 
     def start_list(self):
         while True:
-            opt = input('Input option add/show_all/show_undone/make_done/make_undone/exit')
+            opt = input('Input option add/show_all/show_undone/make_done/make_undone/exit\n')
             if opt == 'exit':
                 self.write_to_file()
                 break
             elif opt == 'add':
-                self.add_task(input('Task_name'), bool(input('write smth if done')))
+                self.add_task(input('Task_name\n'), bool(input('write smth if done\n')))
             elif opt == 'show_all':
                 self.show_tasks()
             elif opt == 'show_undone':
                 self.show_undone_tasks()
             elif opt == 'make_done':
-                self.make_task_done(input('Task_name'))
+                self.make_task_done(input('Task_name\n'))
             elif opt == 'make_undone':
-                self.make_task_undone(input('make_undone'))
+                self.make_task_undone(input('make_undone\n'))
 
 
 my_task_list = TodoList('Vitalii Fisenko', 'tasks.json')

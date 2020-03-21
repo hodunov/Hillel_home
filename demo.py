@@ -68,7 +68,7 @@ class TodoMain:
         :param done:
         :return:
         """
-        task_name = task_name.lstrip(' ').rstrip(' ') # убираем пробелы в начале и конце (Если есть)
+        task_name = task_name.lstrip(' ').rstrip(' ')  # убираем пробелы в начале и конце (Если есть)
         for every_word in task_name.split(" "):  # Проверка каждого слова на ASCII
             if re.match(r'\w', every_word, flags=re.ASCII) is None:
                 return cprint("Input available in English only", color='red')
@@ -78,9 +78,8 @@ class TodoMain:
         pass
 
     def show_Todo(self):
+        print(jb.read(MY_BOX_ID))
         print(type(jb.read(MY_BOX_ID)))
-        print(type(MY_BOX_ID))
-        print(MY_BOX_ID)
 
     def make_task_done(self, task_name):
         self.tasks[task_name] = True
