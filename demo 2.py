@@ -8,11 +8,10 @@ import re
 #     else:
 #         pass
 
-my_str2 = "Artem Hodunov"
+my_str2 = " Artem Hodunov "
 print(my_str2.split(" "))
+my_str2 = my_str2.lstrip(" ").rstrip(" ")
 for every_word in my_str2.split(" "):
     if re.match(r'\w', every_word, flags=re.ASCII) is None:
         raise BaseException('Not match reg exp(((')
-    else:
-        task = Item(task_name, done)
-        self.tasks.update({task.name: task.done})
+    print({my_str2: 123})

@@ -1,6 +1,7 @@
 import json
 import re
 from jsonbox import JsonBox
+from termcolor import cprint
 
 # generate unique box id
 MY_BOX_ID = JsonBox.get_new_box_id()
@@ -8,25 +9,22 @@ MY_BOX_ID = JsonBox.get_new_box_id()
 # create instance
 jb = JsonBox()
 
-data = [{"name": "first", "age": 25}]
+data = [
+    {"Task ": True}
+]
 
 # write data
 result = jb.write(data, MY_BOX_ID)
 
 # get record id of written data
 record_ids = jb.get_record_id(result)
-object_1 = {"ARTEM": "HODUNOV", "age": 25}
-object_2 = {"dddddd": "HODUNOV", "age": 25}
-
-jb.update(object_1, MY_BOX_ID, record_id=['5e74d4cb622c0800173390a5'])
-jb.update(object_2, MY_BOX_ID, record_id=['5e74d4cb622c0800173390a5'])
-
 
 
 class Item:
     """
     Class for contain some information
     """
+
     def __init__(self, name, done):
         self.name = name
         self.done = done
@@ -39,10 +37,11 @@ class TodoMain:
     """
     Main logic
     """
+
     def __init__(self, owner_full_name, file_path):
         self.owner_full_name = owner_full_name
         self.file_path = file_path
-        try:
+        try:  # не уверен, это нужно или нет
             self.tasks = self.get_existing_tasks()
         except (FileExistsError, FileNotFoundError):
             self.tasks = {}
@@ -56,7 +55,7 @@ class TodoMain:
 
     def write_to_file(self):
         """
-        Write some inf to json
+        Write something to json
         :return: json
         """
         with open(self.file_path, 'a+') as file:
@@ -69,19 +68,19 @@ class TodoMain:
         :param done:
         :return:
         """
-        for every_word in task_name.split(" "):
+        task_name = task_name.lstrip(' ').rstrip(' ') # убираем пробелы в начале и конце (Если есть)
+        for every_word in task_name.split(" "):  # Проверка каждого слова на ASCII
             if re.match(r'\w', every_word, flags=re.ASCII) is None:
-                raise BaseException('Not match reg exp(((')
-        else:
-            task = Item(task_name, done)
-            jb.update({task.name: task.done}, MY_BOX_ID, record_ids[0])
-        return
+                return cprint("Input available in English only", color='red')
+            return jb.write({task_name: done}, MY_BOX_ID)
 
-    def remove_Todo(item):
+    def remove_Todo(self):
         pass
 
     def show_Todo(self):
-        print(jb.read(MY_BOX_ID))
+        print(type(jb.read(MY_BOX_ID)))
+        print(type(MY_BOX_ID))
+        print(MY_BOX_ID)
 
     def make_task_done(self, task_name):
         self.tasks[task_name] = True
@@ -98,7 +97,7 @@ class TodoMain:
 
     def start_list(self):
         while True:
-            opt = input('Input option add/show_all/show_undone/make_done/make_undone/exit')
+            opt = input('Input option add/show_all/show_undone/make_done/make_undone/exit\n')
             if opt == 'exit':
                 self.write_to_file()
                 break

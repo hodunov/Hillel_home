@@ -47,6 +47,7 @@ class TodoList:
         tasks = []
         for k, v in self.tasks.items():
             tasks.append(Item(k, v).get_display())
+        print(tasks)
         print(' | '.join(tasks))
 
     def make_task_done(self, task_name):
