@@ -64,6 +64,7 @@ class Bird:
     - умеет ли издавать звуки? (число 1 - Да, 0 - Нет)
     - если умеет издавать звуки, то какие? (строка)
     """
+
     def __init__(self, wingspan, make_sounds, sounds=None):
         self.wingspan = wingspan
         self.make_sounds = make_sounds
@@ -89,8 +90,13 @@ class AnimalDataBase:
         if animal_args[1] == 'Reptile':
             animal_to_db = Animal(animal_args[0], Reptile(animal_args[4]), animal_args[2], animal_args[3])
         if animal_args[1] == 'Bird':
-            animal_to_db = Animal(animal_args[0], Bird(animal_args[4], animal_args[5]), animal_args[2],
-                                  animal_args[3])
+            if len(animal_args) <= 5:
+                animal_to_db = Animal(animal_args[0], Bird(animal_args[4], animal_args[5]),
+                                      animal_args[2], animal_args[3])
+            else:
+                animal_to_db = Animal(animal_args[0], Bird(animal_args[4], animal_args[5], str(
+                    animal_args[6] + " " + animal_args[7] + " " + animal_args[8] + " " + animal_args[9])),
+                                      animal_args[2], animal_args[3])  # пробую передать строку звуков. ПАДАЕТ
         return animal_to_db
 
 
