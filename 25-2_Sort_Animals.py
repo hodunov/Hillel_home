@@ -88,7 +88,6 @@ class AnimalDataBase:
     def _create_animal(self, record):
         global animal_to_db
         animal_args = record.split(' ')
-        print(animal_args)
         if animal_args[1] == "Mammal":
             animal_to_db = Mammal(animal_args[0], animal_args[1], animal_args[2], animal_args[3], animal_args[4])
         if animal_args[1] == 'Reptile':
@@ -155,7 +154,7 @@ for i in range(0, max_length):
 # ______________________ 2  ____________________________
 
 
-print("TASK 2\n===================================================")
+print("=================================================\nTASK 2\n=================================================")
 
 query_choice = "[T] animal_type \n[SP] species \n[M] Mass \n" \
                "[P] Progeny \n[T] Toxic \n[W] Wingspan \n[MS] Make_sounds \n[S] Sounds "
@@ -211,7 +210,6 @@ class Search:
                 return db.show_db()[i].sounds
 
 
-
 while True:
     chose_animal = input("Enter animal name here \n")
     for i in range(0, max_length):
@@ -236,4 +234,4 @@ while True:
                 if input_property == "S":
                     print("Sounds =", Search().sounds(chose_animal))
             except AttributeError:
-                print(f"SORRY! An animal has no attribute!fffff")
+                print(f"SORRY! An animal has no attribute!")
