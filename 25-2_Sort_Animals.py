@@ -234,4 +234,4 @@ while True:
                 if input_property == "S":
                     print("Sounds =", Search().sounds(chose_animal))
             except AttributeError:
-                print(f"SORRY! An animal has no attribute!")
+                print("SORRY! An animal has no attribute!")
