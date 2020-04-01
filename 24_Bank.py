@@ -223,6 +223,6 @@ Alpha = Bank("Alpha", 300000)
 
 Alpha_atm = Alpha.add_atm('AlphaATM')
 
-
+print("TEST")
 
 
