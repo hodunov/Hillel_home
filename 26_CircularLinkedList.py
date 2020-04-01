@@ -9,7 +9,7 @@ class CircularLinkedList:
         self.last = None
 
     # This function is only for empty list
-    def addToEmpty(self, data):
+    def add_to_empty(self, data):
 
         if self.last is not None:
             return self.last
@@ -22,10 +22,10 @@ class CircularLinkedList:
         self.last.next = self.last
         return self.last
 
-    def addBegin(self, data):
+    def add_begin(self, data):
 
         if self.last is None:
-            return self.addToEmpty(data)
+            return self.add_to_empty(data)
 
         temp = Node(data)
         temp.next = self.last.next
@@ -33,10 +33,10 @@ class CircularLinkedList:
 
         return self.last
 
-    def addEnd(self, data):
+    def add_end(self, data):
 
         if self.last is None:
-            return self.addToEmpty(data)
+            return self.add_to_empty(data)
 
         temp = Node(data)
         temp.next = self.last.next
@@ -45,7 +45,7 @@ class CircularLinkedList:
 
         return self.last
 
-    def addAfter(self, data, item):
+    def add_after(self, data, item):
 
         if self.last is None:
             return None
@@ -86,11 +86,10 @@ if __name__ == '__main__':
 
     llist.traverse()
 
-    llist.addToEmpty(0)
-    llist.addBegin(1)
-    llist.addBegin(2)
-    llist.addEnd(88)
-    llist.addEnd(120)
-    llist.addAfter(100, 88)
+    llist.add_to_empty(0)
+    llist.add_begin(1)
+    llist.add_begin(2)
+    llist.add_end(88)
+    llist.add_end(120)
+    llist.add_after(100, 88)
     llist.traverse()
-
