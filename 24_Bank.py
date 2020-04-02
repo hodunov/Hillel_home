@@ -247,7 +247,6 @@ def main():
     my_Atm = ATM(MONOBANK)
     MONOBANK.add_atm('IBOX')
     MONOBANK.create_person_acc(123, 30000, 20000, passport_data={"full_name": "MORTY", "number": 666})
-    print("Introduce yourself")
     RICK = PersonACC(1, 2, 3, passport_data={"full_name": "RICK", "number": 1})
     while True:
         go_to = input("Where you go? (ATM/BANK) \n")
