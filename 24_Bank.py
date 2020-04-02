@@ -15,6 +15,8 @@
 Если аккаунт есть -  у юзера есть выбор куда пойти банк или банкомат. При выборе банка - будет меню банка, если банкома - банкомата
 Менять текущие методы можно по потребности
 """
+
+
 # _____BANKOMAT/ACC______
 
 
@@ -56,11 +58,6 @@ class PersonACC:
 
     # TODO: добавить метод для снятия денег с аккаунта +
 
-    def cash_out(self, value):
-        """Метод для снятия денег"""
-        self.__curr_money += value
-        return self.__curr_money
-
     def set_money(self, val):
         ""
         if val <= self.set_limit:
@@ -70,10 +67,11 @@ class PersonACC:
     # TODO: rename method+
     def check_money_limit(self, money):
         """Проверка лимита"""
-        return all((self.get_limit > money, self.__curr_money))
+        return all((self.get_limit > int(money), self.__curr_money))
 
     def __sub__(self, other):
-        self.__curr_money -= other
+        """Снятие денег с аккаунта"""
+        self.__curr_money -= int(other)
 
 
 class ATM:
@@ -106,21 +104,22 @@ class ATM:
         """
         if self.__connect_to_bank(person_acc):
             while True:
-                operation = input('Input operation:')
+                operation = input('Input operation: (get/set/balance/exit)\n')
                 if operation == 'get':
                     money = input('Input value to get')
                     self.bank.get_money(person_acc, money)
+                    print("Take your money")
                 elif operation == 'set':
                     money = input('Input value to set')
                     self.bank.set_money(person_acc, money)
+                    print("Set success")
                 elif operation == 'balance':
                     self.bank.get_acc_balance(person_acc)
                 elif operation == 'exit':
                     print('By-by')
                     break
         else:
-            print('Login failed ')
-
+            print('Login failed\nFirst, you need to go to the bank and create an account. ')
 
 class Bank:
     def __init__(self, name, start_money):
@@ -160,10 +159,13 @@ class Bank:
         Метод для логина, сравнивает пароли аккаунта и банка, если гуд - вернет тру
         :return: буль
         """
-        bank_side_acc = self.__accounts[person_acc.login]
-        if bank_side_acc.password == person_acc.password:
-            return True
-        return False
+        try:
+            bank_side_acc = self.__accounts[person_acc.login]
+            if bank_side_acc.password == person_acc.password:
+                return True
+            return False
+        except KeyError:
+            return False
 
     def get_money(self, person_acc, money):
         """
@@ -171,7 +173,7 @@ class Bank:
         :return:
         """
         if person_acc.check_money_limit(money):
-            person_acc.get_money(money)
+            person_acc.__sub__(money)
             print(person_acc.cur_money)
 
     def set_money(self, person_acc, money):
@@ -207,22 +209,52 @@ class Bank:
         with open('Accounts_backup.txt', 'w') as file:
             file.write(str(self.__accounts))
 
+    def main(self, person_acc):
+        while True:
+            operation = input('Input operation: (atm_list/create_acc/balance/set/exit)\n')
+            if operation == 'atm_list':
+                print(self.atm_list)
+            elif operation == 'create_acc':
+                print("Wait a second... we're creating your account.")
+                inn = int(input("input inn\n"))
+                limit = int(input("input limit\n"))
+                set_limit = int(input("input set_limit\n"))
+                full_name = input("Enter your full_name")
+                number = int(input("Enter your number"))
+                return self.create_person_acc(inn, limit, set_limit, passport_data={"full_name": full_name, "number": number})
+            elif operation == 'balance':
+                if self.login(person_acc):
+                    print(self.get_acc_balance(person_acc))
+                print("No account. First, create an account.")
+            elif operation == 'set':
+                if self.login(person_acc):
+                    self.set_money(person_acc, int(input("Enter money value\n")))
+                    return
+                print("No account. First, create an account.")
+            elif operation == 'exit':
+                print('By-by')
+                break
 
 
-
-class Main:
-    """Написать функцию или класс, где создасться объект банка и банкомата этого банка, так же будет меню с выбором куда юзер хочет пойти.
-    Если у него нет (обработка ошибок) аккауунта - соббщение о том, что нужно пойти сначала в банк и создать аккаунт.
-    Если аккаунт есть -  у юзера есть выбор куда пойти банк или банкомат. При выборе банка - будет меню банка, если банкома - банкомата
+"""Написать функцию или класс, где создасться объект банка и банкомата этого банка, так же будет меню с выбором куда юзер хочет пойти.
+Если у него нет (обработка ошибок) аккауунта - соббщение о том, что нужно пойти сначала в банк и создать аккаунт.
+Если аккаунт есть -  у юзера есть выбор куда пойти банк или банкомат. При выборе банка - будет меню банка, если банкома - банкомата
 Менять текущие методы можно по потребности"""
-    def choose(self,Bank,BankATM):
 
 
+def main():
+    MONOBANK = Bank("MONOBANK", 1000000)
+    my_Atm = ATM(MONOBANK)
+    MONOBANK.add_atm('IBOX')
+    MONOBANK.create_person_acc(123, 30000, 20000, passport_data={"full_name": "MORTY", "number": 666})
+    print("Introduce yourself")
+    RICK = PersonACC(1, 2, 3, passport_data={"full_name": "RICK", "number": 1})
+    while True:
+        go_to = input("Where you go? (ATM/BANK) \n")
+        if go_to == "ATM":
+            my_Atm.main(RICK)
+        if go_to == "BANK":
+            MONOBANK.main(RICK)
 
-Alpha = Bank("Alpha", 300000)
 
-Alpha_atm = Alpha.add_atm('AlphaATM')
-
-print("TEST")
-
-
+main()
