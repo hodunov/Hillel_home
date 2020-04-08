@@ -16,8 +16,8 @@
 Менять текущие методы можно по потребности
 """
 
-
 # _____BANKOMAT/ACC______
+import json
 
 
 class PersonACC:
@@ -62,6 +62,7 @@ class PersonACC:
         ""
         if val <= self.set_limit:
             self.__curr_money += val
+            return
         print('Set set limit is is low')
 
     # TODO: rename method+
@@ -69,9 +70,21 @@ class PersonACC:
         """Проверка лимита"""
         return all((self.get_limit > int(money), self.__curr_money))
 
-    def __sub__(self, other):
-        """Снятие денег с аккаунта"""
-        self.__curr_money -= int(other)
+    def cash_out(self, amount):
+        self.__curr_money -= int(amount)
+
+    def to_dict(self):
+        """
+        Method to convert obj attrs to dict
+        :param self: ссылка на объект
+        :return:
+        """
+        return {
+            'inn': self.inn,
+            'limit': self.get_limit,
+            'set_limit': self.set_limit,
+            'passport_data': self.passport_data,
+        }
 
 
 class ATM:
@@ -120,6 +133,7 @@ class ATM:
                     break
         else:
             print('Login failed\nFirst, you need to go to the bank and create an account. ')
+
 
 class Bank:
     def __init__(self, name, start_money):
@@ -173,7 +187,7 @@ class Bank:
         :return:
         """
         if person_acc.check_money_limit(money):
-            person_acc.__sub__(money)
+            person_acc.cash_out(money)
             print(person_acc.cur_money)
 
     def set_money(self, person_acc, money):
@@ -191,10 +205,10 @@ class Bank:
         """
         print(person_acc.cur_money)
 
-    def del_back_ATM(self, del_ATM):
+    def del_bank_ATM(self, del_ATM):
         """Удаление банкомата банка"""
         if del_ATM in self.__atm_list: self.__atm_list.remove(del_ATM)
-        return self.__atm_list
+        return
 
     def del_acc(self, del_acc):
         """Удаление аккаунта"""
@@ -202,12 +216,17 @@ class Bank:
             del self.__accounts[del_acc]
         return self.__accounts
 
-    def save(self):
+    def save_person(self):
+        with open("Person.txt", 'w') as file:
+            data = []
+            for v in self.__accounts.values():
+                data.append(v.to_dict())
+            json.dump(data, file)
+
+    def save_ATM(self):
         """Сохранение данных в файл"""
         with open('ATM_backup.txt', 'w') as file:
-            file.write(str(self.__atm_list))
-        with open('Accounts_backup.txt', 'w') as file:
-            file.write(str(self.__accounts))
+            file.write(str(len(self.__atm_list)))
 
     def main(self, person_acc):
         while True:
@@ -221,7 +240,8 @@ class Bank:
                 set_limit = int(input("input set_limit\n"))
                 full_name = input("Enter your full_name")
                 number = int(input("Enter your number"))
-                return self.create_person_acc(inn, limit, set_limit, passport_data={"full_name": full_name, "number": number})
+                return self.create_person_acc(inn, limit, set_limit,
+                                              passport_data={"full_name": full_name, "number": number})
             elif operation == 'balance':
                 if self.login(person_acc):
                     print(self.get_acc_balance(person_acc))
@@ -243,17 +263,25 @@ class Bank:
 
 
 def main():
-    MONOBANK = Bank("MONOBANK", 1000000)
-    my_Atm = ATM(MONOBANK)
-    MONOBANK.add_atm('IBOX')
-    MONOBANK.create_person_acc(123, 30000, 20000, passport_data={"full_name": "MORTY", "number": 666})
+    Monobank = Bank("Monobank", 1000000)
+    my_Atm = ATM(Monobank)
+    Monobank.add_atm('IBOX')
+    Monobank.create_person_acc(123, 30000, 20000, passport_data={"full_name": "MORTY", "number": 666})
     RICK = PersonACC(1, 2, 3, passport_data={"full_name": "RICK", "number": 1})
-    while True:
-        go_to = input("Where you go? (ATM/BANK) \n")
-        if go_to == "ATM":
-            my_Atm.main(RICK)
-        if go_to == "BANK":
-            MONOBANK.main(RICK)
+    Monobank.save_ATM()
+    Monobank.save_person()
+    try:
+        while True:
+            go_to = input("Where you go? (ATM/BANK) \n")
+            if go_to == "ATM":
+                my_Atm.main(RICK)
+            if go_to == "BANK":
+                Monobank.main(RICK)
+    except Exception:
+        Monobank.save_person()
+        Monobank.save_ATM()
+        print(f"An unforeseen error has occurred ({e})"
+              "The data has been saved.")
 
 
 main()

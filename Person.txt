@@ -1,0 +1,1 @@
+[{"inn": 123, "limit": 30000, "set_limit": 20000, "passport_data": {"full_name": "MORTY", "number": 666}}]
